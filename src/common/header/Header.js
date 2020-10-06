@@ -15,6 +15,9 @@ import PropTypes from "prop-types";
 import FormHelperText from "@material-ui/core/FormHelperText";
 import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
+import Snackbar from "@material-ui/core/Snackbar";
+import CloseIcon from "@material-ui/icons/Close";
+import IconButton from "@material-ui/core/IconButton";
 
 const customStyles = {
   content: {
@@ -29,7 +32,7 @@ const customStyles = {
 
 const TabContainer = (props) => {
   return (
-    <Typography component="div" style={{ padding: 0, textAlign: "center" }}>
+    <Typography component="div" style={{ padding: "0px", textAlign: "center" }}>
       {props.children}
     </Typography>
   );
@@ -55,12 +58,15 @@ class Header extends Component {
       emailRequired: "dispNone",
       email: "",
       emailError: "",
-      registerPasswordRequired: "dispNone",
-      registerPassword: "",
-      registerPasswordError: "",
-      registerContactNumberRequired: "dispNone",
-      registerContactNumber: "",
-      registerContactNumberError: "",
+      signupPasswordRequired: "dispNone",
+      signupPassword: "",
+      signupPasswordError: "",
+      signupContactNumberRequired: "dispNone",
+      signupContactNumber: "",
+      signupContactNumberError: "",
+      signupSuccess: false,
+      snackBarOpen: false,
+      snackBarMessage: "",
     };
   }
 
@@ -72,7 +78,26 @@ class Header extends Component {
   };
 
   closeModalHandler = () => {
-    this.setState({ modalIsOpen: false });
+    this.setState({
+      modalIsOpen: false,
+      value: 0,
+      loginContactNumberRequired: "dispNone",
+      loginContactNumber: "",
+      loginPasswordRequired: "dispNone",
+      loginPassword: "",
+      firstNameRequired: "dispNone",
+      firstName: "",
+      lastName: "",
+      emailRequired: "dispNone",
+      email: "",
+      emailError: "",
+      signupPasswordRequired: "dispNone",
+      signupPassword: "",
+      signupPasswordError: "",
+      signupContactNumberRequired: "dispNone",
+      signupContactNumber: "",
+      signupContactNumberError: "",
+    });
   };
 
   tabChangeHandler = (event, value) => {
@@ -94,12 +119,12 @@ class Header extends Component {
     this.state.email === ""
       ? this.setState({ emailRequired: "dispBlock" })
       : this.setState({ emailRequired: "dispNone" });
-    this.state.registerPassword === ""
-      ? this.setState({ registerPasswordRequired: "dispBlock" })
-      : this.setState({ registerPasswordRequired: "dispNone" });
-    this.state.registerContactNumber === ""
-      ? this.setState({ registerContactNumberRequired: "dispBlock" })
-      : this.setState({ registerContactNumberRequired: "dispNone" });
+    this.state.signupPassword === ""
+      ? this.setState({ signupPasswordRequired: "dispBlock" })
+      : this.setState({ signupPasswordRequired: "dispNone" });
+    this.state.signupContactNumber === ""
+      ? this.setState({ signupContactNumberRequired: "dispBlock" })
+      : this.setState({ signupContactNumberRequired: "dispNone" });
 
     //email validation
     if (this.state.email === "") {
@@ -120,53 +145,86 @@ class Header extends Component {
     }
 
     //password validation
-    if (this.state.registerPassword === "") {
-      this.setState({ registerPasswordRequired: "dispBlock" });
-      this.setState({ registerPasswordError: "required" });
+    if (this.state.signupPassword === "") {
+      this.setState({ signupPasswordRequired: "dispBlock" });
+      this.setState({ signupPasswordError: "required" });
     } else if (
-      this.state.registerPassword
+      this.state.signupPassword
         .toString()
         .match(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{4,32}$/i) === null
     ) {
-      this.setState({ registerPasswordRequired: "dispBlock" });
+      this.setState({ signupPasswordRequired: "dispBlock" });
       this.setState({
-        registerPasswordError:
+        signupPasswordError:
           "Password must contain at least one capital letter, one small letter, one number, and one special character",
       });
     } else {
-      this.setState({ registerPasswordRequired: "dispNone" });
-      this.setState({ registerPasswordError: "" });
+      this.setState({ signupPasswordRequired: "dispNone" });
+      this.setState({ signupPasswordError: "" });
     }
 
     //contact number validation
-    if (this.state.registerContactNumber === "") {
-      this.setState({ registerContactNumberRequired: "dispBlock" });
-      this.setState({ registerContactNumberError: "required" });
+    if (this.state.signupContactNumber === "") {
+      this.setState({ signupContactNumberRequired: "dispBlock" });
+      this.setState({ signupContactNumberError: "required" });
       return;
     } else if (
-      this.state.registerContactNumber
-        .toString()
-        .match(/^(?=.*\d).{10,10}$/i) === null
+      this.state.signupContactNumber.toString().match(/^(?=.*\d).{10,10}$/i) ===
+      null
     ) {
-      this.setState({ registerContactNumberRequired: "dispBlock" });
+      this.setState({ signupContactNumberRequired: "dispBlock" });
       this.setState({
-        registerContactNumberError:
+        signupContactNumberError:
           "Contact No. must contain only numbers and must be 10 digits long",
       });
     } else {
-      this.setState({ registerContactNumberRequired: "dispNone" });
-      this.setState({ registerContactNumberError: "" });
+      this.setState({ signupContactNumberRequired: "dispNone" });
+      this.setState({ signupContactNumberError: "" });
     }
 
     if (
       this.state.email === "" ||
-      this.state.firstname === "" ||
-      this.state.lastname === "" ||
-      this.state.mobile === "" ||
-      this.state.registerPassword === ""
+      this.state.firstName === "" ||
+      this.state.lastName === "" ||
+      this.state.signupContactNumber === "" ||
+      this.state.signupPassword === ""
     ) {
       return;
     }
+
+    //xhr request for signup
+
+    let dataSignup = JSON.stringify({
+      contact_number: this.state.registerContactNumber,
+      email_address: this.state.email,
+      first_name: this.state.firstName,
+      last_name: this.state.lastName,
+      password: this.state.registerPassword,
+    });
+
+    let xhrSignup = new XMLHttpRequest();
+    let that = this;
+    xhrSignup.addEventListener("readystatechange", function() {
+      if (this.readyState === 4) {
+        if (xhrSignup.status === 200 || xhrSignup.status === 201) {
+          that.setState({
+            signupSuccess: true,
+          });
+          that.snackBarHandler("Registered successfully! Please login now!");
+          that.openModalHandler();
+        } else {
+          that.setState({ registerContactNumberRequired: "dispBlock" });
+          that.setState({
+            registerContactNumberError: JSON.parse(this.responseText).message,
+          });
+        }
+      }
+    });
+
+    xhrSignup.open("POST", this.props.baseUrl + "customer/signup");
+    xhrSignup.setRequestHeader("Content-Type", "application/json");
+    xhrSignup.setRequestHeader("Cache-Control", "no-cache");
+    xhrSignup.send(dataSignup);
   };
 
   firstNameChangeHandler = (e) => {
@@ -187,6 +245,15 @@ class Header extends Component {
 
   registerContactNumberChangeHandler = (e) => {
     this.setState({ registerContactNumber: e.target.value });
+  };
+
+  snackBarHandler = (message) => {
+    // if any snackbar open already close that
+    this.setState({ snackBarOpen: false });
+    // updating component state snackbar message
+    this.setState({ snackBarMessage: message });
+    // Show snackbar
+    this.setState({ snackBarOpen: true });
   };
 
   render() {
@@ -393,6 +460,29 @@ class Header extends Component {
             </TabContainer>
           )}
         </Modal>
+        <Snackbar
+          anchorOrigin={{
+            vertical: "bottom",
+            horizontal: "left",
+          }}
+          open={this.state.snackBarOpen}
+          autoHideDuration={6000}
+          onClose={() => this.setState({ snackBarOpen: false })}
+          ContentProps={{
+            "aria-describedby": "message-id",
+          }}
+          message={<span id="message-id">{this.state.snackBarMessage}</span>}
+          action={[
+            <IconButton
+              key="close"
+              aria-label="Close"
+              color="inherit"
+              onClick={() => this.setState({ snackBarOpen: false })}
+            >
+              <CloseIcon />
+            </IconButton>,
+          ]}
+        />
       </div>
     );
   }

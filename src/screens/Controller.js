@@ -5,7 +5,7 @@ import Home from "../screens/home/Home";
 class Controller extends Component {
   constructor() {
     super();
-    this.baseUrl = "http://localhost:8080/api/v1/";
+    this.baseUrl = "http://localhost:8080/api/";
     this.state = {
       loggedIn: sessionStorage.getItem("access-token") == null ? false : true,
     };

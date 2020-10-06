@@ -170,6 +170,7 @@ class Header extends Component {
                   type="number"
                   username={this.state.loginContactNumber}
                   onChange={this.loginContactNumberChangeHandler}
+                  className="loginmodal-input"
                 />
                 <FormHelperText
                   className={this.state.loginContactNumberRequired}
@@ -186,6 +187,7 @@ class Header extends Component {
                   type="password"
                   loginpassword={this.state.loginPassword}
                   onChange={this.loginPasswordChangeHandler}
+                  className="loginmodal-input"
                 />
                 <FormHelperText className={this.state.loginPasswordRequired}>
                   <span className="red">required</span>
@@ -215,6 +217,7 @@ class Header extends Component {
                   type="text"
                   firstname={this.state.firstName}
                   onChange={this.firstNameChangeHandler}
+                  className="loginmodal-input"
                 />
                 <FormHelperText className={this.state.firstNameRequired}>
                   <span className="red">required</span>
@@ -229,6 +232,7 @@ class Header extends Component {
                   type="text"
                   lastname={this.state.lastName}
                   onChange={this.lastNameChangeHandler}
+                  className="loginmodal-input"
                 />
                 <FormHelperText className={this.state.lastNameRequired}>
                   <span className="red">required</span>
@@ -243,6 +247,7 @@ class Header extends Component {
                   type="text"
                   email={this.state.email}
                   onChange={this.emailChangeHandler}
+                  className="loginmodal-input"
                 />
                 <FormHelperText className={this.state.emailRequired}>
                   <span className="red">required</span>
@@ -257,6 +262,7 @@ class Header extends Component {
                   type="password"
                   registerpassword={this.state.registerPassword}
                   onChange={this.registerPasswordChangeHandler}
+                  className="loginmodal-input"
                 />
                 <FormHelperText className={this.state.registerPasswordRequired}>
                   <span className="red">required</span>
@@ -273,6 +279,7 @@ class Header extends Component {
                   type="number"
                   mobile={this.state.registerContactNumber}
                   onChange={this.registerContactNumberChangeHandler}
+                  className="loginmodal-input"
                 />
                 <FormHelperText
                   className={this.state.registerContactNumberRequired}

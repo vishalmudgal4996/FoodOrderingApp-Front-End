@@ -40,6 +40,10 @@
   margin-bottom: 20px;
 }
 
+.loginmodal-input {
+  width: 240px;
+}
+
 @media screen and (max-width: 400px) {
   .flex-container-header {
     display: flex;

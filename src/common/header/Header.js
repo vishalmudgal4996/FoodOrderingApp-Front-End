@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import "./Header.css";
+import Fastfood from "@material-ui/icons/Fastfood";
 
 class Header extends Component {
   constructor(props) {
@@ -6,7 +8,17 @@ class Header extends Component {
     this.state = {};
   }
   render() {
-    return <div>Header component</div>;
+    return (
+      <div>
+        <header className="app-header">
+          <div className="flex-container-header">
+            <div className="app-logo">
+              <Fastfood style={{ fontSize: "35px", color: "white" }} />
+            </div>
+          </div>
+        </header>
+      </div>
+    );
   }
 }
 

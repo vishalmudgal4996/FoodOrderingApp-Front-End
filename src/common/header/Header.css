@@ -1,0 +1,14 @@
+.app-header {
+  background-color: #263238;
+  height: 54px;
+  display: flex;
+  justify-content: center;
+}
+
+.flex-container-header {
+  width: 98%;
+  height: 54px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

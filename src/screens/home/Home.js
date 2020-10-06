@@ -9,7 +9,7 @@ class Home extends Component {
   render() {
     return (
       <div>
-        <Header homeOptions="true" />
+        <Header homeOptions="true" baseUrl={this.props.baseUrl} />
       </div>
     );
   }

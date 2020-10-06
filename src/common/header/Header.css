@@ -50,6 +50,10 @@
   width: 270px;
 }
 
+.formControl {
+  width: 80%;
+}
+
 @media screen and (max-width: 400px) {
   .flex-container-header {
     display: flex;

@@ -195,11 +195,11 @@ class Header extends Component {
     //xhr request for signup
 
     let dataSignup = JSON.stringify({
-      contact_number: this.state.registerContactNumber,
+      contact_number: this.state.signupContactNumber,
       email_address: this.state.email,
       first_name: this.state.firstName,
       last_name: this.state.lastName,
-      password: this.state.registerPassword,
+      password: this.state.signupPassword,
     });
 
     let xhrSignup = new XMLHttpRequest();
@@ -213,9 +213,9 @@ class Header extends Component {
           that.snackBarHandler("Registered successfully! Please login now!");
           that.openModalHandler();
         } else {
-          that.setState({ registerContactNumberRequired: "dispBlock" });
+          that.setState({ signupContactNumberRequired: "dispBlock" });
           that.setState({
-            registerContactNumberError: JSON.parse(this.responseText).message,
+            signupContactNumberError: JSON.parse(this.responseText).message,
           });
         }
       }
@@ -239,12 +239,12 @@ class Header extends Component {
     this.setState({ email: e.target.value });
   };
 
-  registerPasswordChangeHandler = (e) => {
-    this.setState({ registerPassword: e.target.value });
+  signupPasswordChangeHandler = (e) => {
+    this.setState({ signupPassword: e.target.value });
   };
 
-  registerContactNumberChangeHandler = (e) => {
-    this.setState({ registerContactNumber: e.target.value });
+  signupContactNumberChangeHandler = (e) => {
+    this.setState({ signupContactNumber: e.target.value });
   };
 
   snackBarHandler = (message) => {
@@ -312,7 +312,7 @@ class Header extends Component {
           </Tabs>
           {this.state.value === 0 && (
             <TabContainer>
-              <FormControl required>
+              <FormControl required className="formControl">
                 <InputLabel htmlFor="loginContactNumber">
                   Contact No.
                 </InputLabel>
@@ -322,6 +322,7 @@ class Header extends Component {
                   username={this.state.loginContactNumber}
                   onChange={this.loginContactNumberChangeHandler}
                   className="loginmodal-input"
+                  fullWidth={true}
                 />
                 <FormHelperText
                   className={this.state.loginContactNumberRequired}
@@ -331,7 +332,7 @@ class Header extends Component {
               </FormControl>
               <br />
               <br />
-              <FormControl required>
+              <FormControl required className="formControl">
                 <InputLabel htmlFor="loginPassword">Password</InputLabel>
                 <Input
                   id="loginPassword"
@@ -339,6 +340,7 @@ class Header extends Component {
                   loginpassword={this.state.loginPassword}
                   onChange={this.loginPasswordChangeHandler}
                   className="loginmodal-input"
+                  fullWidth={true}
                 />
                 <FormHelperText className={this.state.loginPasswordRequired}>
                   <span className="red">required</span>
@@ -346,11 +348,6 @@ class Header extends Component {
               </FormControl>
               <br />
               <br />
-              {this.state.loggedIn === true && (
-                <FormControl>
-                  <span className="successText">Login Successful!</span>
-                </FormControl>
-              )}
               <br />
               <br />
               <Button variant="contained" color="primary">
@@ -361,14 +358,15 @@ class Header extends Component {
 
           {this.state.value === 1 && (
             <TabContainer>
-              <FormControl required>
+              <FormControl required className="formControl">
                 <InputLabel htmlFor="firstName">First Name</InputLabel>
                 <Input
                   id="firstName"
                   type="text"
                   firstname={this.state.firstName}
                   onChange={this.firstNameChangeHandler}
-                  className="loginmodal-input"
+                  className="input-fields"
+                  fullWidth={true}
                 />
                 <FormHelperText className={this.state.firstNameRequired}>
                   <span className="red">required</span>
@@ -376,26 +374,28 @@ class Header extends Component {
               </FormControl>
               <br />
               <br />
-              <FormControl>
+              <FormControl className="formControl">
                 <InputLabel htmlFor="lastName">Last Name</InputLabel>
                 <Input
                   id="lastName"
                   type="text"
                   lastname={this.state.lastName}
                   onChange={this.lastNameChangeHandler}
-                  className="loginmodal-input"
+                  className="input-fields"
+                  fullWidth={true}
                 />
               </FormControl>
               <br />
               <br />
-              <FormControl required>
+              <FormControl required className="formControl">
                 <InputLabel htmlFor="email">Email</InputLabel>
                 <Input
                   id="email"
-                  type="text"
+                  type="email"
                   email={this.state.email}
                   onChange={this.emailChangeHandler}
-                  className="loginmodal-input"
+                  className="input-fields"
+                  fullWidth={true}
                 />
                 <FormHelperText className={this.state.emailRequired}>
                   <span className="red">{this.state.emailError}</span>
@@ -403,51 +403,44 @@ class Header extends Component {
               </FormControl>
               <br />
               <br />
-              <FormControl required>
-                <InputLabel htmlFor="registerPassword">Password</InputLabel>
+              <FormControl required className="formControl">
+                <InputLabel htmlFor="signupPassword">Password</InputLabel>
                 <Input
-                  id="registerPassword"
+                  id="signupPassword"
                   type="password"
-                  registerpassword={this.state.registerPassword}
-                  onChange={this.registerPasswordChangeHandler}
-                  className="loginmodal-input"
+                  signuppassword={this.state.signupPassword}
+                  onChange={this.signupPasswordChangeHandler}
+                  className="input-fields"
+                  fullWidth={true}
                 />
-                <FormHelperText className={this.state.registerPasswordRequired}>
-                  <div className="custom-formhelper">
-                    {this.state.registerPasswordError}
-                  </div>
+                <FormHelperText className={this.state.signupPasswordRequired}>
+                  <span className="red">{this.state.signupPasswordError}</span>
                 </FormHelperText>
               </FormControl>
               <br />
               <br />
-              <FormControl required>
-                <InputLabel htmlFor="registerContactNumber">
+              <FormControl required className="formControl">
+                <InputLabel htmlFor="signupContactNumber">
                   Contact No.
                 </InputLabel>
                 <Input
-                  id="registerContactNumber"
+                  id="signupContactNumber"
                   type="number"
-                  mobile={this.state.registerContactNumber}
-                  onChange={this.registerContactNumberChangeHandler}
-                  className="loginmodal-input"
+                  mobile={this.state.signupContactNumber}
+                  onChange={this.signupContactNumberChangeHandler}
+                  className="input-fields"
+                  fullWidth={true}
                 />
                 <FormHelperText
-                  className={this.state.registerContactNumberRequired}
+                  className={this.state.signupContactNumberRequired}
                 >
-                  <div className="custom-formhelper">
-                    {this.state.registerContactNumberError}
-                  </div>
+                  <span className="red">
+                    {this.state.signupContactNumberError}
+                  </span>
                 </FormHelperText>
               </FormControl>
               <br />
               <br />
-              {this.state.registrationSuccess === true && (
-                <FormControl>
-                  <span className="successText">
-                    Registration Successful. Please Login!
-                  </span>
-                </FormControl>
-              )}
               <br />
               <br />
               <Button

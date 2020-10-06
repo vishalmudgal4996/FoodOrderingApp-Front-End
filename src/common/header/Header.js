@@ -51,7 +51,6 @@ class Header extends Component {
       loginPassword: "",
       firstNameRequired: "dispNone",
       firstName: "",
-      lastNameRequired: "dispNone",
       lastName: "",
       emailRequired: "dispNone",
       email: "",
@@ -83,6 +82,31 @@ class Header extends Component {
 
   loginPasswordChangeHandler = (e) => {
     this.setState({ loginPassword: e.target.value });
+  };
+
+  signUpClickHandler = () => {
+    this.state.firstName === ""
+      ? this.setState({ firstNameRequired: "dispBlock" })
+      : this.setState({ firstNameRequired: "dispNone" });
+    this.state.email === ""
+      ? this.setState({ emailRequired: "dispBlock" })
+      : this.setState({ emailRequired: "dispNone" });
+    this.state.registerPassword === ""
+      ? this.setState({ registerPasswordRequired: "dispBlock" })
+      : this.setState({ registerPasswordRequired: "dispNone" });
+    this.state.registerContactNumber === ""
+      ? this.setState({ registerContactNumberRequired: "dispBlock" })
+      : this.setState({ registerContactNumberRequired: "dispNone" });
+
+    if (
+      this.state.email === "" ||
+      this.state.firstname === "" ||
+      this.state.lastname === "" ||
+      this.state.mobile === "" ||
+      this.state.registerPassword === ""
+    ) {
+      return;
+    }
   };
 
   firstNameChangeHandler = (e) => {
@@ -225,7 +249,7 @@ class Header extends Component {
               </FormControl>
               <br />
               <br />
-              <FormControl required>
+              <FormControl>
                 <InputLabel htmlFor="lastName">Last Name</InputLabel>
                 <Input
                   id="lastName"
@@ -234,9 +258,6 @@ class Header extends Component {
                   onChange={this.lastNameChangeHandler}
                   className="loginmodal-input"
                 />
-                <FormHelperText className={this.state.lastNameRequired}>
-                  <span className="red">required</span>
-                </FormHelperText>
               </FormControl>
               <br />
               <br />
@@ -298,7 +319,11 @@ class Header extends Component {
               )}
               <br />
               <br />
-              <Button variant="contained" color="primary">
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={this.signUpClickHandler}
+              >
                 SIGNUP
               </Button>
             </TabContainer>

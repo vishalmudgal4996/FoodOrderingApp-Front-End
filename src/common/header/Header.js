@@ -24,12 +24,12 @@ class Header extends Component {
             </div>
             {this.props.homeOptions === "true" ? (
               <div className="app-search">
-                <Typography variant="title">
+                <Typography variant="h6">
                   <Input
                     type="text"
                     placeholder="Search by Restaurant Name"
                     inputProps={{ "aria-label": "description" }}
-                    style={{ color: "grey", width: 250 }}
+                    style={{ color: "grey", width: 280 }}
                     startAdornment={
                       <InputAdornment position="start">
                         <Search style={{ color: "white" }} />

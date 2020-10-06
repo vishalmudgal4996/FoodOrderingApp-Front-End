@@ -24,6 +24,22 @@
   border-bottom-color: white !important ;
 }
 
+.dispNone {
+  display: none;
+}
+
+.dispBlock {
+  display: block;
+}
+
+.red {
+  color: red;
+}
+
+.tabs {
+  margin-bottom: 20px;
+}
+
 @media screen and (max-width: 400px) {
   .flex-container-header {
     display: flex;

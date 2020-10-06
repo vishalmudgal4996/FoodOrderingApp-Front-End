@@ -36,12 +36,18 @@
   color: red;
 }
 
+.custom-formhelper {
+  color: red;
+  height: max-content;
+  width: 270px;
+}
+
 .tabs {
   margin-bottom: 20px;
 }
 
 .loginmodal-input {
-  width: 240px;
+  width: 270px;
 }
 
 @media screen and (max-width: 400px) {

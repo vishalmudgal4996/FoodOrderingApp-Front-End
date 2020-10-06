@@ -54,10 +54,13 @@ class Header extends Component {
       lastName: "",
       emailRequired: "dispNone",
       email: "",
+      emailError: "",
       registerPasswordRequired: "dispNone",
       registerPassword: "",
+      registerPasswordError: "",
       registerContactNumberRequired: "dispNone",
       registerContactNumber: "",
+      registerContactNumberError: "",
     };
   }
 
@@ -97,6 +100,63 @@ class Header extends Component {
     this.state.registerContactNumber === ""
       ? this.setState({ registerContactNumberRequired: "dispBlock" })
       : this.setState({ registerContactNumberRequired: "dispNone" });
+
+    //email validation
+    if (this.state.email === "") {
+      this.setState({
+        emailRequired: "dispBlock",
+        emailError: "required",
+      });
+    } else if (
+      this.state.email
+        .toString()
+        .match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i) === null
+    ) {
+      this.setState({ emailRequired: "dispBlock" });
+      this.setState({ emailError: "Invalid Email" });
+    } else {
+      this.setState({ emailRequired: "dispNone" });
+      this.setState({ emailError: "" });
+    }
+
+    //password validation
+    if (this.state.registerPassword === "") {
+      this.setState({ registerPasswordRequired: "dispBlock" });
+      this.setState({ registerPasswordError: "required" });
+    } else if (
+      this.state.registerPassword
+        .toString()
+        .match(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{4,32}$/i) === null
+    ) {
+      this.setState({ registerPasswordRequired: "dispBlock" });
+      this.setState({
+        registerPasswordError:
+          "Password must contain at least one capital letter, one small letter, one number, and one special character",
+      });
+    } else {
+      this.setState({ registerPasswordRequired: "dispNone" });
+      this.setState({ registerPasswordError: "" });
+    }
+
+    //contact number validation
+    if (this.state.registerContactNumber === "") {
+      this.setState({ registerContactNumberRequired: "dispBlock" });
+      this.setState({ registerContactNumberError: "required" });
+      return;
+    } else if (
+      this.state.registerContactNumber
+        .toString()
+        .match(/^(?=.*\d).{10,10}$/i) === null
+    ) {
+      this.setState({ registerContactNumberRequired: "dispBlock" });
+      this.setState({
+        registerContactNumberError:
+          "Contact No. must contain only numbers and must be 10 digits long",
+      });
+    } else {
+      this.setState({ registerContactNumberRequired: "dispNone" });
+      this.setState({ registerContactNumberError: "" });
+    }
 
     if (
       this.state.email === "" ||
@@ -271,7 +331,7 @@ class Header extends Component {
                   className="loginmodal-input"
                 />
                 <FormHelperText className={this.state.emailRequired}>
-                  <span className="red">required</span>
+                  <span className="red">{this.state.emailError}</span>
                 </FormHelperText>
               </FormControl>
               <br />
@@ -286,7 +346,9 @@ class Header extends Component {
                   className="loginmodal-input"
                 />
                 <FormHelperText className={this.state.registerPasswordRequired}>
-                  <span className="red">required</span>
+                  <div className="custom-formhelper">
+                    {this.state.registerPasswordError}
+                  </div>
                 </FormHelperText>
               </FormControl>
               <br />
@@ -305,7 +367,9 @@ class Header extends Component {
                 <FormHelperText
                   className={this.state.registerContactNumberRequired}
                 >
-                  <span className="red">required</span>
+                  <div className="custom-formhelper">
+                    {this.state.registerContactNumberError}
+                  </div>
                 </FormHelperText>
               </FormControl>
               <br />

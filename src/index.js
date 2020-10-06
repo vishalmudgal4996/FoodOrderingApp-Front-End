@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import * as serviceWorker from "./serviceWorker";
 import Controller from "./screens/Controller";
+import "typeface-roboto";
 
 ReactDOM.render(<Controller />, document.getElementById("root"));
 

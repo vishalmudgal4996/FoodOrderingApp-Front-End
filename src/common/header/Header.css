@@ -12,3 +12,14 @@
   justify-content: space-between;
   align-items: center;
 }
+
+.app-search {
+  display: flex;
+  align-items: center;
+  width: 320px !important;
+  color: white;
+}
+
+.MuiInput-underline:after {
+  border-bottom-color: white !important ;
+}

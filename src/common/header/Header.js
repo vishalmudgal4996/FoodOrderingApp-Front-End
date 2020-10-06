@@ -1,8 +1,13 @@
 import React, { Component } from "react";
 import "./Header.css";
+import { withRouter } from "react-router-dom";
 import Fastfood from "@material-ui/icons/Fastfood";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import Button from "@material-ui/core/Button";
+import Search from "@material-ui/icons/Search";
+import Input from "@material-ui/core/Input";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import Typography from "@material-ui/core/Typography";
 
 class Header extends Component {
   constructor(props) {
@@ -17,6 +22,25 @@ class Header extends Component {
             <div className="app-logo">
               <Fastfood style={{ fontSize: "35px", color: "white" }} />
             </div>
+            {this.props.homeOptions === "true" ? (
+              <div className="app-search">
+                <Typography variant="title">
+                  <Input
+                    type="text"
+                    placeholder="Search by Restaurant Name"
+                    inputProps={{ "aria-label": "description" }}
+                    style={{ color: "grey", width: 250 }}
+                    startAdornment={
+                      <InputAdornment position="start">
+                        <Search style={{ color: "white" }} />
+                      </InputAdornment>
+                    }
+                  />
+                </Typography>
+              </div>
+            ) : (
+              ""
+            )}
             <div className="app-login">
               <Button variant="contained" color="default">
                 <AccountCircle style={{ marginRight: 4 }} />
@@ -30,4 +54,4 @@ class Header extends Component {
   }
 }
 
-export default Header;
+export default withRouter(Header);

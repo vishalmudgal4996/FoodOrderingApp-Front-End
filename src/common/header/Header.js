@@ -53,6 +53,7 @@ class Header extends Component {
       loginContactError: "",
       loginPasswordRequired: "dispNone",
       loginPassword: "",
+      loginPasswordError: "",
       firstNameRequired: "dispNone",
       firstName: "",
       lastName: "",
@@ -67,6 +68,8 @@ class Header extends Component {
       signupContactNumberError: "",
       snackBarOpen: false,
       snackBarMessage: "",
+      loggedIn: sessionStorage.getItem("access-token") === null ? false : true,
+      loggedInCustomerFirstName: sessionStorage.getItem("customer-name"),
     };
   }
 
@@ -83,8 +86,10 @@ class Header extends Component {
       value: 0,
       loginContactNumberRequired: "dispNone",
       loginContactNumber: "",
+      loginContactError: "",
       loginPasswordRequired: "dispNone",
       loginPassword: "",
+      loginPasswordError: "",
       firstNameRequired: "dispNone",
       firstName: "",
       lastName: "",
@@ -133,12 +138,66 @@ class Header extends Component {
       this.setState({ loginContactError: "" });
     }
 
+    //login password validation
+    if (this.state.loginPassword === "") {
+      this.setState({
+        loginPasswordRequired: "dispBlock",
+        loginPasswordError: "required",
+      });
+    } else {
+      this.setState({
+        loginPasswordRequired: "dispNone",
+        loginPasswordError: "",
+      });
+    }
+
     if (
       this.state.loginContactNumber === "" ||
       this.state.loginPassword === ""
     ) {
       return;
     }
+
+    //xhr request for login
+    let dataLogin = null;
+    let xhrLogin = new XMLHttpRequest();
+    let that = this;
+    xhrLogin.addEventListener("readystatechange", function() {
+      if (this.readyState === 4) {
+        if (xhrLogin.status === 200 || xhrLogin.status === 201) {
+          let loginResponse = JSON.parse(this.responseText);
+          sessionStorage.setItem("uuid", JSON.parse(this.responseText).id);
+          sessionStorage.setItem(
+            "access-token",
+            xhrLogin.getResponseHeader("access-token")
+          );
+          sessionStorage.setItem("customer-name", loginResponse.first_name);
+          that.setState({
+            loggedIn: true,
+            loggedInCustomerFirstName: loginResponse.first_name,
+          });
+          that.snackBarHandler("Logged in successfully!");
+          that.closeModalHandler();
+        } else {
+          that.setState({ loginPasswordRequired: "dispBlock" });
+          that.setState({
+            loginPasswordError: JSON.parse(this.responseText).message,
+          });
+        }
+      }
+    });
+
+    xhrLogin.open("POST", this.props.baseUrl + "customer/login");
+    xhrLogin.setRequestHeader(
+      "Authorization",
+      "Basic " +
+        window.btoa(
+          this.state.loginContactNumber + ":" + this.state.loginPassword
+        )
+    );
+    xhrLogin.setRequestHeader("Content-Type", "application/json");
+    xhrLogin.setRequestHeader("Cache-Control", "no-cache");
+    xhrLogin.send(dataLogin);
   };
 
   loginContactNumberChangeHandler = (e) => {
@@ -379,7 +438,7 @@ class Header extends Component {
                   fullWidth={true}
                 />
                 <FormHelperText className={this.state.loginPasswordRequired}>
-                  <span className="red">required</span>
+                  <span className="red">{this.state.loginPasswordError}</span>
                 </FormHelperText>
               </FormControl>
               <br />
@@ -470,7 +529,7 @@ class Header extends Component {
                 <Input
                   id="signupContactNumber"
                   type="number"
-                  signupcontactNumber={this.state.signupContactNumber}
+                  signupcontactnumber={this.state.signupContactNumber}
                   value={this.state.signupContactNumber}
                   onChange={this.signupContactNumberChangeHandler}
                   className="input-fields"

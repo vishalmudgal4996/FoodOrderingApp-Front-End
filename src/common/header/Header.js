@@ -18,6 +18,8 @@ import InputLabel from "@material-ui/core/InputLabel";
 import Snackbar from "@material-ui/core/Snackbar";
 import CloseIcon from "@material-ui/icons/Close";
 import IconButton from "@material-ui/core/IconButton";
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
 
 const customStyles = {
   content: {
@@ -70,6 +72,7 @@ class Header extends Component {
       snackBarMessage: "",
       loggedIn: sessionStorage.getItem("access-token") === null ? false : true,
       loggedInCustomerFirstName: sessionStorage.getItem("customer-name"),
+      anchorE1: null,
     };
   }
 
@@ -349,6 +352,24 @@ class Header extends Component {
     this.setState({ snackBarOpen: true });
   };
 
+  handleMenu = (event) => {
+    this.setState({ anchorEl: event.currentTarget });
+  };
+
+  handleClose = () => {
+    this.setState({ anchorEl: null });
+  };
+
+  handleProfileMenuClick = () => {
+    this.setState({ anchorEl: null });
+  };
+
+  handleLogoutMenuClick = () => {
+    this.setState({ anchorEl: null });
+    this.props.history.push("/");
+    sessionStorage.removeItem("access-token");
+  };
+
   render() {
     return (
       <div>
@@ -377,14 +398,52 @@ class Header extends Component {
               ""
             )}
             <div className="app-login">
-              <Button
-                variant="contained"
-                color="default"
-                onClick={this.openModalHandler}
-              >
-                <AccountCircle style={{ marginRight: 4 }} />
-                LOGIN
-              </Button>
+              {this.state.loggedIn ? (
+                <div>
+                  <Button
+                    className="loggedInButton"
+                    disableRipple={true}
+                    variant="text"
+                    aria-owns={this.state.anchorEl ? "simple-menu" : undefined}
+                    aria-haspopup="true"
+                    onClick={this.handleMenu}
+                  >
+                    <AccountCircle
+                      style={{ marginRight: 4 }}
+                      htmlColor="#c2c2c2"
+                    />
+                    {this.state.loggedInCustomerFirstName}
+                  </Button>
+                  <Menu
+                    id="simple-menu"
+                    anchorEl={this.state.anchorEl}
+                    open={Boolean(this.state.anchorEl)}
+                    onClose={this.handleClose}
+                  >
+                    <MenuItem
+                      className="menu-item"
+                      onClick={this.handleProfileMenuClick}
+                    >
+                      My Profile
+                    </MenuItem>
+                    <MenuItem
+                      className="menu-item"
+                      onClick={this.handleLogoutMenuClick}
+                    >
+                      Logout
+                    </MenuItem>
+                  </Menu>
+                </div>
+              ) : (
+                <Button
+                  variant="contained"
+                  color="default"
+                  onClick={this.openModalHandler}
+                >
+                  <AccountCircle style={{ marginRight: 4 }} />
+                  LOGIN
+                </Button>
+              )}
             </div>
           </div>
         </header>

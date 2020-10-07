@@ -6,10 +6,17 @@ class Home extends Component {
     super(props);
     this.state = {};
   }
+
+  updateSearchRestaurant = (searchRestaurant, searchOn) => {};
+
   render() {
     return (
       <div>
-        <Header homeOptions="true" baseUrl={this.props.baseUrl} />
+        <Header
+          homeOptions="true"
+          baseUrl={this.props.baseUrl}
+          updateSearchRestaurant={this.updateSearchRestaurant}
+        />
       </div>
     );
   }

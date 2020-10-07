@@ -50,6 +50,7 @@ class Header extends Component {
       value: 0,
       loginContactNumberRequired: "dispNone",
       loginContactNumber: "",
+      loginContactError: "",
       loginPasswordRequired: "dispNone",
       loginPassword: "",
       firstNameRequired: "dispNone",
@@ -64,7 +65,6 @@ class Header extends Component {
       signupContactNumberRequired: "dispNone",
       signupContactNumber: "",
       signupContactNumberError: "",
-      signupSuccess: false,
       snackBarOpen: false,
       snackBarMessage: "",
     };
@@ -101,7 +101,44 @@ class Header extends Component {
   };
 
   tabChangeHandler = (event, value) => {
-    this.setState({ value });
+    this.setState({
+      value,
+    });
+  };
+
+  loginClickHandler = () => {
+    this.state.loginContactNumber === ""
+      ? this.setState({ loginContactNumberRequired: "dispBlock" })
+      : this.setState({ loginContactNumberRequired: "dispNone" });
+    this.state.loginPassword === ""
+      ? this.setState({ loginPasswordRequired: "dispBlock" })
+      : this.setState({ loginPasswordRequired: "dispNone" });
+
+    // login contact number validation
+    if (this.state.loginContactNumber === "") {
+      this.setState({
+        loginContactNumberRequired: "dispBlock",
+        loginContactError: "required",
+      });
+    } else if (
+      this.state.loginContactNumber.toString().match(/^(?=.*\d).{10,10}$/i) ===
+      null
+    ) {
+      this.setState({ loginContactNumberRequired: "dispBlock" });
+      this.setState({
+        loginContactError: "Invalid Contact",
+      });
+    } else {
+      this.setState({ loginContactNumberRequired: "dispNone" });
+      this.setState({ loginContactError: "" });
+    }
+
+    if (
+      this.state.loginContactNumber === "" ||
+      this.state.loginPassword === ""
+    ) {
+      return;
+    }
   };
 
   loginContactNumberChangeHandler = (e) => {
@@ -207,9 +244,6 @@ class Header extends Component {
     xhrSignup.addEventListener("readystatechange", function() {
       if (this.readyState === 4) {
         if (xhrSignup.status === 200 || xhrSignup.status === 201) {
-          that.setState({
-            signupSuccess: true,
-          });
           that.snackBarHandler("Registered successfully! Please login now!");
           that.openModalHandler();
         } else {
@@ -319,15 +353,16 @@ class Header extends Component {
                 <Input
                   id="loginContactNumber"
                   type="number"
-                  username={this.state.loginContactNumber}
+                  logincontactnumber={this.state.loginContactNumber}
+                  value={this.state.loginContactNumber}
                   onChange={this.loginContactNumberChangeHandler}
-                  className="loginmodal-input"
+                  className="input-fields"
                   fullWidth={true}
                 />
                 <FormHelperText
                   className={this.state.loginContactNumberRequired}
                 >
-                  <span className="red">required</span>
+                  <span className="red">{this.state.loginContactError}</span>
                 </FormHelperText>
               </FormControl>
               <br />
@@ -338,8 +373,9 @@ class Header extends Component {
                   id="loginPassword"
                   type="password"
                   loginpassword={this.state.loginPassword}
+                  value={this.state.loginPassword}
                   onChange={this.loginPasswordChangeHandler}
-                  className="loginmodal-input"
+                  className="input-fields"
                   fullWidth={true}
                 />
                 <FormHelperText className={this.state.loginPasswordRequired}>
@@ -350,7 +386,11 @@ class Header extends Component {
               <br />
               <br />
               <br />
-              <Button variant="contained" color="primary">
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={this.loginClickHandler}
+              >
                 LOGIN
               </Button>
             </TabContainer>
@@ -364,6 +404,7 @@ class Header extends Component {
                   id="firstName"
                   type="text"
                   firstname={this.state.firstName}
+                  value={this.state.firstName}
                   onChange={this.firstNameChangeHandler}
                   className="input-fields"
                   fullWidth={true}
@@ -380,6 +421,7 @@ class Header extends Component {
                   id="lastName"
                   type="text"
                   lastname={this.state.lastName}
+                  value={this.state.lastName}
                   onChange={this.lastNameChangeHandler}
                   className="input-fields"
                   fullWidth={true}
@@ -393,6 +435,7 @@ class Header extends Component {
                   id="email"
                   type="email"
                   email={this.state.email}
+                  value={this.state.email}
                   onChange={this.emailChangeHandler}
                   className="input-fields"
                   fullWidth={true}
@@ -409,6 +452,7 @@ class Header extends Component {
                   id="signupPassword"
                   type="password"
                   signuppassword={this.state.signupPassword}
+                  value={this.state.signupPassword}
                   onChange={this.signupPasswordChangeHandler}
                   className="input-fields"
                   fullWidth={true}
@@ -426,7 +470,8 @@ class Header extends Component {
                 <Input
                   id="signupContactNumber"
                   type="number"
-                  mobile={this.state.signupContactNumber}
+                  signupcontactNumber={this.state.signupContactNumber}
+                  value={this.state.signupContactNumber}
                   onChange={this.signupContactNumberChangeHandler}
                   className="input-fields"
                   fullWidth={true}

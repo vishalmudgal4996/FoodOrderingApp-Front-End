@@ -20,6 +20,7 @@ import CloseIcon from "@material-ui/icons/Close";
 import IconButton from "@material-ui/core/IconButton";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
+import { Link } from "react-router-dom";
 
 const customStyles = {
   content: {
@@ -420,12 +421,19 @@ class Header extends Component {
                     open={Boolean(this.state.anchorEl)}
                     onClose={this.handleClose}
                   >
-                    <MenuItem
-                      className="menu-item"
-                      onClick={this.handleProfileMenuClick}
+                    <Link
+                      to={"/profile"}
+                      className="linkedPage"
+                      underline="none"
                     >
-                      My Profile
-                    </MenuItem>
+                      <MenuItem
+                        className="menu-item linkedPage"
+                        disableGutters={false}
+                        onClick={this.handleProfileMenuClick}
+                      >
+                        My Profile
+                      </MenuItem>
+                    </Link>
                     <MenuItem
                       className="menu-item"
                       onClick={this.handleLogoutMenuClick}

@@ -13,32 +13,38 @@ class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
-        restaurantList: []
+      restaurantList: []
     }
-}
+  }
 
 
-componentWillMount() {
+  componentWillMount() {
 
-  let data = null;
-  let xhr = new XMLHttpRequest();
-  let that = this;
-  xhr.addEventListener("readystatechange", function () {
+    let data = null;
+    let xhr = new XMLHttpRequest();
+    let that = this;
+    xhr.addEventListener("readystatechange", function () {
       if (this.readyState === 4) {
-          console.log(this.responseText);
-          that.setState({
-              restaurantList: JSON.parse(this.responseText).restaurants
-          });
+        console.log(this.responseText);
+        that.setState({
+          restaurantList: JSON.parse(this.responseText).restaurants
+        });
       }
-  });
+    });
 
-  xhr.open("GET", this.props.baseUrl + "restaurant");
-  xhr.setRequestHeader("Cache-Control", "no-cache");
-  xhr.send(data);
+    xhr.open("GET", this.props.baseUrl + "restaurant");
+    xhr.setRequestHeader("Cache-Control", "no-cache");
+    xhr.send(data);
 
-}
+  }
+
 
   updateSearchRestaurant = (searchRestaurant, searchOn) => { };
+
+  restaurantCardClickHandler = (restaurantId) => {
+    this.props.history.push('/restaurant/' + restaurantId);
+  }
+
 
   render() {
     return (
@@ -56,7 +62,7 @@ componentWillMount() {
             (
               <GridListTile key={restaurant.id}>
                 <Card style={{ width: "95%", height: "95%" }} >
-                  
+                  <CardActionArea onClick={() => this.restaurantCardClickHandler(restaurant.id)}>
                     <CardMedia
                       component="img"
                       alt={restaurant.name}
@@ -84,7 +90,7 @@ componentWillMount() {
                         <span><i className="fa fa-inr"></i><span style={{ fontSize: "100%", fontWeight: "bold" }}>{restaurant.average_price} for two </span></span>
                       </div>
                     </div>
-                  
+                  </CardActionArea>
                 </Card>
               </GridListTile>
             )

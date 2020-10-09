@@ -49,7 +49,49 @@ componentWillMount() {
           updateSearchRestaurant={this.updateSearchRestaurant}
         />
 
-        
+        <GridList cellHeight={600} cols={4} spacing={2}>
+
+
+          {this.state.restaurantList.map(restaurant =>
+            (
+              <GridListTile key={restaurant.id}>
+                <Card style={{ width: "95%", height: "95%" }} >
+                  
+                    <CardMedia
+                      component="img"
+                      alt={restaurant.name}
+                      height="160"
+                      image={restaurant.photo_URL}
+                      title={restaurant.restaurant_name}
+                    />
+                    <CardContent >
+                      <Typography gutterBottom variant="h4" component="h2">
+                        {restaurant.restaurant_name}
+                      </Typography>
+                      <div><br />
+                        <Typography style={{ height: "18px", display: "block" }} variant="h6" >
+                          {restaurant.categories}
+                        </Typography>
+                      </div>
+                      <br /><br />
+                    </CardContent>
+                    <div className="rating-main-contnr">
+                      <div className="rating-bg-color">
+                        <i className="fa fa-star" aria-hidden="true"></i>
+                        <span> {restaurant.customer_rating} ({restaurant.number_customers_rated})</span>
+                      </div>
+                      <div className="avg-price">
+                        <span><i className="fa fa-inr"></i><span style={{ fontSize: "100%", fontWeight: "bold" }}>{restaurant.average_price} for two </span></span>
+                      </div>
+                    </div>
+                  
+                </Card>
+              </GridListTile>
+            )
+          )}
+
+        </GridList>
+
       </div >
 
     );

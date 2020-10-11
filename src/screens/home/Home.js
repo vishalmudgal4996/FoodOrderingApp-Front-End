@@ -100,7 +100,7 @@ class Home extends Component {
     let data = null;
     let xhr = new XMLHttpRequest();
     let that = this;
-    xhr.addEventListener("readystatechange", function() {
+    xhr.addEventListener("readystatechange", function () {
       if (xhr.readyState === 4 && xhr.status === 200) {
         that.setState({
           restaurantList: JSON.parse(this.responseText).restaurants,
@@ -200,7 +200,7 @@ class Home extends Component {
                       <CardContent className={classes.cardContent}>
                         <div className="card-bottom-info">
                           <span className="rest-rating">
-                          <FontAwesomeIcon icon="star" size="sm" color="white" />
+                            <FontAwesomeIcon icon="star" size="sm" color="white" />
                             <Typography variant="caption" component="p">
                               {restaurant.customer_rating}
                             </Typography>
@@ -232,10 +232,10 @@ class Home extends Component {
                 </Grid>
               ))
             ) : (
-              <Typography variant="body1" component="p">
-                No restaurant with given name.
-              </Typography>
-            )}
+                <Typography variant="body1" component="p">
+                  No restaurant with given name.
+                </Typography>
+              )}
           </Grid>
         </div>
       </div>

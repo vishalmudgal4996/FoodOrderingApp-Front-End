@@ -391,7 +391,7 @@ class Details extends Component {
                             <CardContent className={classes.cardContent}>
                                 {this.state.cartItems.map(cartItem => ( //Iterating over each item in cartItem to show in the cart.
                                     <div className="cart-menu-item-container" key={cartItem.id}>
-                                        <i className="fa fa-stop-circle-o" aria-hidden="true" style={{ color: cartItem.itemType === "NON_VEG" ? "#BE4A47" : "#5A9A5B" }}></i>
+                                         <FontAwesomeIcon icon="stop-circle" style={{ color: cartItem.itemType === "NON_VEG" ? "#BE4A47" : "#5A9A5B" }} />
                                         <Typography variant="subtitle1" component="p" className={classes.menuItemName} id="cart-menu-item-name" >{cartItem.name[0].toUpperCase() + cartItem.name.slice(1)}</Typography>
                                         <div className="quantity-container">
                                             <IconButton className={classes.cartItemButton} id="minus-button" aria-label="remove" onClick={() => this.minusButtonClickHandler(cartItem)} >

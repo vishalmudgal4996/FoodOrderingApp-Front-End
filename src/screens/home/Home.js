@@ -7,6 +7,7 @@ import CardActionArea from "@material-ui/core/CardActionArea";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import "./Home.css";
 
 const styles = (theme) => ({
@@ -213,7 +214,7 @@ class Home extends Component {
                               component="p"
                               style={{ fontSize: "14px" }}
                             >
-                              <i className="fa fa-inr" aria-hidden="true" />
+                              <FontAwesomeIcon icon="rupee-sign" />
                               {restaurant.average_price}
                             </Typography>
                             <Typography

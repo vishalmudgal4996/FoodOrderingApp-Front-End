@@ -339,7 +339,7 @@ render() {
                         </div>
                         <div className="restaurant-avg-cost-container">
                             <div className="restaurant-avg-cost">
-                                <i className="fa fa-inr" aria-hidden="true"></i>
+                            <FontAwesomeIcon icon="rupee-sign" />
                                 <Typography variant="subtitle1" component="p" className={classes.avgCost}>{this.state.restaurantDetails.avgCost}</Typography>
                             </div>
                             <Typography variant="caption" component="p" className={classes.textRatingCost} >AVERAGE COST FOR TWO PEOPLE</Typography>
@@ -360,7 +360,7 @@ render() {
                                     <FontAwesomeIcon icon="circle" size="sm" color={item.item_type === "NON_VEG" ? "#BE4A47" : "#5A9A5B"} />
                                     <Typography variant="subtitle1" component="p" className={classes.menuItemName} >{item.item_name[0].toUpperCase() + item.item_name.slice(1)}</Typography>
                                     <div className="item-price">
-                                        <i className="fa fa-inr" aria-hidden="true"></i>
+                                    <FontAwesomeIcon icon="rupee-sign" />
                                         <Typography variant="subtitle1" component="p" className={classes.itemPrice} >{item.price.toFixed(2)}</Typography>
                                     </div>
                                     <IconButton className={classes.addButton} aria-label="add" onClick={() => this.itemAddButtonClickHandler(item)}>
@@ -403,7 +403,7 @@ render() {
                                 </IconButton>
                                 </div>
                                 <div className="item-price">
-                                    <i className="fa fa-inr" aria-hidden="true" style={{ color: 'grey' }}></i>
+                                <FontAwesomeIcon icon="rupee-sign" style={{ color: 'grey' }} />
                                     <Typography variant="subtitle1" component="p" className={classes.itemPrice} id="cart-item-price">{cartItem.totalAmount.toFixed(2)}</Typography>
                                 </div>
                             </div>
@@ -411,7 +411,7 @@ render() {
                             <div className="total-amount-container">
                                 <Typography variant="subtitle2" component="p" className={classes.totalAmount}>TOTAL AMOUNT</Typography>
                                 <div className="total-price">
-                                    <i className="fa fa-inr" aria-hidden="true" ></i>
+                                <FontAwesomeIcon icon="rupee-sign" />
                                     <Typography variant="subtitle1" component="p" className={classes.itemPrice} id="cart-total-price">{this.state.totalAmount.toFixed(2)}</Typography>
                                 </div>
                             </div>

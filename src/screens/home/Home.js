@@ -199,7 +199,7 @@ class Home extends Component {
                       <CardContent className={classes.cardContent}>
                         <div className="card-bottom-info">
                           <span className="rest-rating">
-                            <i className="fa fa-star" />
+                          <FontAwesomeIcon icon="star" size="sm" color="white" />
                             <Typography variant="caption" component="p">
                               {restaurant.customer_rating}
                             </Typography>

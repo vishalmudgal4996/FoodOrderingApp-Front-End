@@ -82,6 +82,9 @@ class Header extends Component {
       modalIsOpen: true,
       value: 0,
     });
+    if (this.props.changeBadgeVisibility) {
+      this.props.changeBadgeVisibility();
+    }
   };
 
   closeModalHandler = () => {
@@ -107,6 +110,10 @@ class Header extends Component {
       signupContactNumber: "",
       signupContactNumberError: "",
     });
+
+    if (this.props.changeBadgeVisibility) {
+      this.props.changeBadgeVisibility();
+    }
   };
 
   tabChangeHandler = (event, value) => {
@@ -166,7 +173,7 @@ class Header extends Component {
     let dataLogin = null;
     let xhrLogin = new XMLHttpRequest();
     let that = this;
-    xhrLogin.addEventListener("readystatechange", function () {
+    xhrLogin.addEventListener("readystatechange", function() {
       if (this.readyState === 4) {
         if (xhrLogin.status === 200 || xhrLogin.status === 201) {
           let loginResponse = JSON.parse(this.responseText);
@@ -195,9 +202,9 @@ class Header extends Component {
     xhrLogin.setRequestHeader(
       "Authorization",
       "Basic " +
-      window.btoa(
-        this.state.loginContactNumber + ":" + this.state.loginPassword
-      )
+        window.btoa(
+          this.state.loginContactNumber + ":" + this.state.loginPassword
+        )
     );
     xhrLogin.setRequestHeader("Content-Type", "application/json");
     xhrLogin.setRequestHeader("Cache-Control", "no-cache");
@@ -304,7 +311,7 @@ class Header extends Component {
 
     let xhrSignup = new XMLHttpRequest();
     let that = this;
-    xhrSignup.addEventListener("readystatechange", function () {
+    xhrSignup.addEventListener("readystatechange", function() {
       if (this.readyState === 4) {
         if (xhrSignup.status === 200 || xhrSignup.status === 201) {
           that.snackBarHandler("Registered successfully! Please login now!");
@@ -372,7 +379,7 @@ class Header extends Component {
     let logoutData = null;
     let that = this;
     let xhrLogout = new XMLHttpRequest();
-    xhrLogout.addEventListener("readystatechange", function () {
+    xhrLogout.addEventListener("readystatechange", function() {
       if (xhrLogout.readyState === 4 && xhrLogout.status === 200) {
         sessionStorage.removeItem("uuid");
         sessionStorage.removeItem("access-token");
@@ -399,7 +406,7 @@ class Header extends Component {
       let that = this;
       let xhrSearchRestaurant = new XMLHttpRequest();
 
-      xhrSearchRestaurant.addEventListener("readystatechange", function () {
+      xhrSearchRestaurant.addEventListener("readystatechange", function() {
         if (
           xhrSearchRestaurant.readyState === 4 &&
           xhrSearchRestaurant.status === 200
@@ -431,7 +438,7 @@ class Header extends Component {
             <div className="app-logo">
               <Fastfood style={{ fontSize: "35px", color: "white" }} />
             </div>
-            {this.props.homeOptions === "true" ? (
+            {this.props.searchOptions === "true" ? (
               <div className="app-search">
                 <Typography variant="h6">
                   <Input
@@ -449,8 +456,8 @@ class Header extends Component {
                 </Typography>
               </div>
             ) : (
-                ""
-              )}
+              ""
+            )}
             <div className="app-login">
               {this.state.loggedIn ? (
                 <div>
@@ -496,15 +503,15 @@ class Header extends Component {
                   </Menu>
                 </div>
               ) : (
-                  <Button
-                    variant="contained"
-                    color="default"
-                    onClick={this.openModalHandler}
-                  >
-                    <AccountCircle style={{ marginRight: 4 }} />
+                <Button
+                  variant="contained"
+                  color="default"
+                  onClick={this.openModalHandler}
+                >
+                  <AccountCircle style={{ marginRight: 4 }} />
                   LOGIN
-                  </Button>
-                )}
+                </Button>
+              )}
             </div>
           </div>
         </header>

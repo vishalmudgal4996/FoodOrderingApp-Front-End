@@ -82,6 +82,9 @@ class Header extends Component {
       modalIsOpen: true,
       value: 0,
     });
+    if (this.props.changeBadgeVisibility) {
+      this.props.changeBadgeVisibility();
+    }
   };
 
   closeModalHandler = () => {
@@ -107,6 +110,10 @@ class Header extends Component {
       signupContactNumber: "",
       signupContactNumberError: "",
     });
+
+    if (this.props.changeBadgeVisibility) {
+      this.props.changeBadgeVisibility();
+    }
   };
 
   tabChangeHandler = (event, value) => {

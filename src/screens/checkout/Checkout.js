@@ -35,6 +35,10 @@ import CloseIcon from "@material-ui/icons/Close";
 import { Redirect } from "react-router-dom";
 import Header from "../../common/header/Header";
 import "../checkout/Checkout.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import "@fortawesome/fontawesome-free-solid";
+import "@fortawesome/fontawesome-svg-core";
+import "@fortawesome/fontawesome-free-regular";
 
 // Custom Styles to over ride material ui default styles
 const styles = (theme) => ({
@@ -314,13 +318,7 @@ class Checkout extends Component {
       });
       xhrPayment.open("GET", this.props.baseUrl + "payment");
       xhrPayment.send(paymentData);
-      window.addEventListener("resize", this.getGridListColumn); //Adding a event listening on the  to change the no of columns for the grid.
     }
-  }
-
-  //This Method will be called when the components are unmounted so as to withdraw all the asynchronous function running.
-  componentWillUnmount() {
-    window.removeEventListener("resize", this.updateCardsGridListCols); // Removing event listener.
   }
 
   // This method calls the getAllAddress of customer endpoint
@@ -1027,9 +1025,8 @@ class Checkout extends Component {
                 </Typography>
                 {this.state.cartItems.map((cartItem) => (
                   <div className="menu-item-container" key={cartItem.id}>
-                    <i
-                      className="fa fa-stop-circle-o"
-                      aria-hidden="true"
+                    <FontAwesomeIcon
+                      icon="stop-circle"
                       style={{
                         color:
                           cartItem.itemType === "NON_VEG"
@@ -1053,9 +1050,8 @@ class Checkout extends Component {
                       {cartItem.quantity}
                     </Typography>
                     <div className="summary-item-price-container">
-                      <i
-                        className="fa fa-inr"
-                        aria-hidden="true"
+                      <FontAwesomeIcon
+                        icon="rupee-sign"
                         style={{ color: "grey" }}
                       />
                       <Typography
@@ -1105,9 +1101,8 @@ class Checkout extends Component {
                     Sub Total
                   </Typography>
                   <div className="amount">
-                    <i
-                      className="fa fa-inr"
-                      aria-hidden="true"
+                    <FontAwesomeIcon
+                      icon="rupee-sign"
                       style={{ color: "grey" }}
                     />
                     <Typography
@@ -1130,9 +1125,8 @@ class Checkout extends Component {
                     Discount
                   </Typography>
                   <div className="amount">
-                    <i
-                      className="fa fa-inr"
-                      aria-hidden="true"
+                    <FontAwesomeIcon
+                      icon="rupee-sign"
                       style={{ color: "grey" }}
                     />
                     <Typography
@@ -1156,9 +1150,8 @@ class Checkout extends Component {
                     Net Amount
                   </Typography>
                   <div className="amount">
-                    <i
-                      className="fa fa-inr"
-                      aria-hidden="true"
+                    <FontAwesomeIcon
+                      icon="rupee-sign"
                       style={{ color: "grey" }}
                     />
                     <Typography
